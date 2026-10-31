@@ -10,6 +10,9 @@ export default defineConfig(
         extends: [js.configs.recommended, tseslint.configs.strictTypeChecked, tseslint.configs.stylisticTypeChecked],
         languageOptions: {
             globals: { ...globals.browser, process: 'readonly' },
+            parserOptions: {
+                projectService:true,
+            }
         },
         rules: {
             '@typescript-eslint/no-explicit-any': 'error',
