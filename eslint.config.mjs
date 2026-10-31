@@ -7,7 +7,7 @@ export default defineConfig(
     globalIgnores(['dist']),
     {
         files: ['**/*.{js,ts,mjs}'],
-        extends: [js.configs.recommended, tseslint.configs.strict, tseslint.configs.stylistic],
+        extends: [js.configs.recommended, tseslint.configs.strictTypeChecked, tseslint.configs.stylisticTypeChecked],
         languageOptions: {
             globals: { ...globals.browser, process: 'readonly' },
         },
