@@ -4,6 +4,7 @@ export enum Endpoint{
     Sources = 'sources',
     News = 'everything',
 }
+type UrlOptions = Readonly<Record<string, string>>;
 
 interface ResponseMap{
     [Endpoint.News]: NewsResponse;
@@ -12,22 +13,19 @@ interface ResponseMap{
 
 interface RequestConfig<E extends Endpoint> {
     endpoint: E;
-    options?: Record<string, string>;
+    options?: UrlOptions;
 }
 
 class Loader {
-    private baseLink: string;
-    private readonly options: Record<string, string>;
+    private readonly baseLink: string;
+    private options: UrlOptions;
 
-    constructor(baseLink: string, options: Record<string, string>) {
+    constructor(baseLink: string, options: UrlOptions) {
         this.baseLink = baseLink;
         this.options = options;
     }
 
-    public getResp<E extends Endpoint>(
-        config: RequestConfig<E>,
-        callback: (data: ResponseMap[E]) => void
-    ): void {
+    public getResp<E extends Endpoint>(config: RequestConfig<E>, callback: (data: ResponseMap[E]) => void): void {
         this.load('GET', config, callback);
     }
 
@@ -41,8 +39,8 @@ class Loader {
         return res;
     }
 
-    private makeUrl(options: Record<string, string>, endpoint: Endpoint): string {
-        const urlOptions: Record<string, string> = { ...this.options, ...options };
+    private makeUrl(options: UrlOptions, endpoint: Endpoint): string {
+        const urlOptions: UrlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
         Object.keys(urlOptions).forEach((key) => {
@@ -55,12 +53,11 @@ class Loader {
     private load<E extends Endpoint>(
         method: string,
         { endpoint, options = {} }: RequestConfig<E>,
-        callback: (data: ResponseMap[E]) => void,
+        callback: (data: ResponseMap[E]) => void
     ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then((res: Response) => this.errorHandler(res))
-            .then((res: Response) => res.json() as
-                Promise<ResponseMap[E]>)
+            .then((res: Response) => res.json() as Promise<ResponseMap[E]>)
 
             .then((data) => {
                 callback(data);
