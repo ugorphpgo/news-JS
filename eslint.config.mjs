@@ -11,8 +11,8 @@ export default defineConfig(
         languageOptions: {
             globals: { ...globals.browser, process: 'readonly' },
             parserOptions: {
-                projectService:true,
-            }
+                projectService: true,
+            },
         },
         rules: {
             '@typescript-eslint/no-explicit-any': 'error',
@@ -20,6 +20,7 @@ export default defineConfig(
     },
     {
         files: ['webpack.*.{js,ts}', 'eslint.config.mjs'],
+        extends: [tseslint.configs.disableTypeChecked],
         languageOptions: {
             globals: globals.node,
         },
