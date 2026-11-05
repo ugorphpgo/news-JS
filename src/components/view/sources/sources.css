@@ -1,20 +1,23 @@
 .sources {
     display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    height: 120px;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-height: 220px;
     overflow: auto;
-    align-items: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    scrollbar-width: thin;
+    scrollbar-color: #30c5ff transparent;
     font: 300 1em 'Fira Sans', sans-serif;
 }
 
 .source__item {
-    background: none;
-    border: 2px solid #30c5ff;
+    background: #20232a;
+    border: 1px solid #2c3a44;
+    border-radius: 8px;
     font: inherit;
     line-height: 1;
-    margin: 0.5em;
-    padding: 1em 2em;
+    padding: 0.7em 1em;
     color: #70d6ff;
     transition: 0.25s;
     cursor: pointer;
@@ -24,11 +27,31 @@
 .source__item:focus {
     border-color: #3fcc59;
     color: #69db7e;
-    box-shadow: 0 0.5em 0.5em -0.4em #3fcc59;
-    transform: translateY(-0.25em);
+    background: #263038;
 }
 
 .source__item-name {
     font-weight: 400;
     white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+    .sources {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        position: sticky;
+        top: 12px;
+        height: calc(100vh - 24px);
+        max-height: none;
+        overflow-y: auto;
+    }
+
+    .source__item {
+        flex-shrink: 0;
+    }
+
+    .source__item-name {
+        white-space: normal;
+    }
 }
