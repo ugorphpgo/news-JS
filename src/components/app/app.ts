@@ -9,7 +9,7 @@ class App {
         this.view = new AppView();
     }
 
-    public start() {
+    public start():void {
         const sourcesContainer = document.querySelector('.sources');
 
         if (sourcesContainer) sourcesContainer.addEventListener('click', (e) => { this.controller.getNews(e, (data) => { this.view.drawNews(data); }); });
